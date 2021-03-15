@@ -1,0 +1,13 @@
+---
+# tasks file for kubecluster
+- name: Fail if all container variables are false
+  ansible.builtin.fail: msg="Bailing out. You need a container provider."
+  when: not crio_enable and not containerd_enable
+- name: Fail if all container variables are true
+  ansible.builtin.fail: msg="Bailing out. You can't use more than one container provider."
+  when: crio_enable and containerd_enable
+- include: worker.yml
+- include: crio.yml
+  when: crio_enable
+- include: containerd.yml
+  when: containerd_enable

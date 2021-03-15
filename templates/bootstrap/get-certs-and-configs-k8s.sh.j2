@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cp /vagrant/cert/ca.pem /vagrant/cert/ca-key.pem /var/lib/kubelet/
+
+cp /vagrant/json/ca-config.json /var/lib/kubelet/
+
+cp /vagrant/config/kube-proxy.kubeconfig /var/lib/kube-proxy/kubeconfig

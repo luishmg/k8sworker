@@ -1,0 +1,20 @@
+- name: Print all available facts
+  ansible.builtin.debug:
+    var: ansible_facts
+
+- name: CRIO - Download kubic libcontainers stable repo
+  get_url:
+    url: '{{ "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/" + ansible_facts["distribution"] + "_" + ansible_facts["distribution_major_version"] + "/devel:kubic:libcontainers:stable.repo" }}'
+    dest: /etc/yum.repos.d/devel:kubic:libcontainers:stable.repo
+    mode: '0644'
+
+- name: CRIO - Download crio repo
+  get_url:
+    url:  '{{ "https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:" + crio_version + "/" + ansible_facts["distribution"] + "_" + ansible_facts["distribution_major_version"] + "/devel:kubic:libcontainers:stable:cri-o:" + crio_version + ".repo" }}'
+    dest: '{{ "/etc/yum.repos.d/devel:kubic:libcontainers:stable:cri-o:" + crio_version + ".repo" }}'
+    mode: '0644'
+
+- name: Worker - Installing CRI-O
+  yum:
+    name: cri-o
+    state: latest

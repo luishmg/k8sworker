@@ -1,0 +1,12 @@
+[Unit]
+Description=Bootstrap Kubernetes Worker
+After=network.target
+Requires=network.target
+
+[Service]
+Type=oneshot
+User=root
+ExecStart=/opt/startup/bootstrap-worker.sh
+
+[Install]
+WantedBy=default.target
